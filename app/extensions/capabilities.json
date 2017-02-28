@@ -1,0 +1,86 @@
+{
+  "environments": {
+    "Local": {
+      "applications": {
+        "demo-live": {
+          "serverUrl": "http://tws-host:8080/tws/v1",
+          "views": {
+            "Control Panel": {
+              "isDefault": true,
+              "module": "demo-control-panel"
+            }
+          },
+          "tasks": {
+            "hello-tracy-sim": {
+              "serverUrl": "http://tws-host:8080/tws/v1",
+              "views": {
+                "Measure": {
+                  "isDefault": true,
+                  "module": "task-measurement"
+                },
+                "Control Panel": {
+                  "module": "demo-control-panel"
+                }
+              }
+            }
+          }
+        },
+        "demo-static-app": {
+          "serverUrl": "http://tws-host:8080/tws/v1",
+          "views": {
+            "Measure": {
+              "module": "application-measurement"
+            }
+          },
+          "tasks": {
+            "excellent-task": {
+              "serverUrl": "http://tws-host:8080/tws/v1",
+              "views": {
+                "Measure": {
+                  "isDefault": true,
+                  "module": "task-measurement"
+                }
+              }
+            },
+            "good-task": {
+              "serverUrl": "http://tws-host:8080/tws/v1",
+              "views": {
+                "Measure": {
+                  "isDefault": true,
+                  "module": "task-measurement"
+                }
+              }
+            },
+            "fair-task": {
+              "serverUrl": "http://tws-host:8080/tws/v1",
+              "views": {
+                "Measure": {
+                  "isDefault": true,
+                  "module": "task-measurement"
+                }
+              }
+            },
+            "poor-task": {
+              "serverUrl": "http://tws-host:8080/tws/v1",
+              "views": {
+                "Measure": {
+                  "isDefault": true,
+                  "module": "task-measurement"
+                }
+              }
+            },
+            "unacceptable-task": {
+              "serverUrl": "http://tws-host:8080/tws/v1",
+              "views": {
+                "Measure": {
+                  "isDefault": true,
+                  "module": "task-measurement"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

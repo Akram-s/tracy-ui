@@ -1,0 +1,65 @@
+<div ng-controller="ConfigController as configCtrl">
+    <div class="panel panel-default">
+        <div class="panel-heading">Tracy registry configuration</div>
+        <div class="panel-body">
+            <p>{{test}}</p>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="scheme" class="col-sm-2 control-label">Scheme</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="scheme" ng-model="registryConfig.scheme" ng-disabled="registryConfig.static">
+                            <option value="http">http</option>
+                            <option value="https">https</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="host" class="col-sm-2 control-label">Host</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="host" placeholder="localhost" ng-model="registryConfig.host" ng-disabled="registryConfig.static">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="port" class="col-sm-2 control-label">Port</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="port" placeholder="8080" ng-model="registryConfig.port" ng-disabled="registryConfig.static">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="path" class="col-sm-2 control-label">Path</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="path" placeholder="/tws/v1/registry" ng-model="registryConfig.path" ng-disabled="registryConfig.static">
+                    </div>
+                </div>
+                <div class = "form-group">
+                    <label for="path" class="col-sm-2 control-label">Static</label>
+                    <div class = "col-sm-offset-2">
+                        <div class = "checkbox">
+                            <label><input type = "checkbox" ng-model="registryConfig.static"> Bypass dynamic registry</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-12">
+                        <button type="submit" class="btn btn-default" ng-click="defaultConfig()">Default</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-12">
+                        <button type="submit" class="btn btn-default" ng-click="testConfig()">Test</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-12">
+                        <button type="submit" class="btn btn-primary" ng-click="updateConfig()">Update</button>
+                    </div>
+                </div>
+            </form>
+            <div ng-repeat="alert in alerts">
+                <div class="alert {{alert.type}}">{{alert.message}}</div>
+            </div>
+            <p>{{$localStorage.registryConfig.url}}</p>
+        </div>
+    </div>
+</div>

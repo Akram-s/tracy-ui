@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html ng-app="tracy-ui">
+
+<head>
+  <meta charset="utf-8" />
+
+  <link data-require="bootstrap-css@*" data-semver="3.3.7" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script>document.write('<base href="' + document.location + '" />');</script>
+
+  <!--external resources-->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/ngstorage/ngStorage.js"></script>
+  <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+  <script src="bower_components/highcharts/highstock.src.js"></script>
+  <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
+  <script src="bower_components/d3/d3.js" charset="UTF-8"></script>
+
+  <!--internal resources-->
+  <link rel="stylesheet" href="app.css">
+  <script src="app.js"></script>
+  <script src="tracy-core/storage/storageService.js"></script>
+  <script src="tracy-core/config/configService.js"></script>
+  <script src="tracy-core/environment/environmentController.js"></script>
+  <script src="tracy-core/task/taskController.js"></script>
+  <script src="tracy-core/application/applicationController.js"></script>
+  <script src="tracy-core/applicationMenu/applicationMenuController.js"></script>
+  <script src="tracy-core/landing/landingController.js"></script>
+  <script src="tracy-core/config/configController.js"></script>
+
+  <!--tracy-modules modules go here-->
+  <script src="tracy-core/tracy-modules/branding/brandingService.js"></script>
+  <script src="tracy-core/tracy-modules/branding/brandingController.js"></script>
+  <script src="tracy-core/tracy-modules/task-measurement/taskMeasurementDirective.js"></script>
+  <script src="tracy-core/tracy-modules/task-measurement/taskMeasurementController.js"></script>
+  <script src="tracy-core/tracy-modules/task-measurement/taskMeasurementService.js"></script>
+  <script src="tracy-core/tracy-modules/measurable-charts/measurableChartService.js"></script>
+  <script src="tracy-core/tracy-modules/task-timeline/taskTimelineController.js"></script>
+  <script src="tracy-core/tracy-modules/task-timeline/taskTimelineWebService.js"></script>
+  <script src="tracy-core/tracy-modules/application-measurement/applicationMeasurementDirective.js"></script>
+  <script src="tracy-core/tracy-modules/application-measurement/applicationMeasurementController.js"></script>
+  <script src="tracy-core/tracy-modules/application-measurement/applicationMeasurementService.js"></script>
+  <script src="tracy-core/tracy-modules/application-measurement/stats.js"></script>
+  <script src="tracy-core/tracy-modules/d3-timeline/d3TimelineDirective.js"></script>
+  <script src="tracy-core/tracy-modules/d3-timeline/d3TimelineController.js"></script>
+  <script src="tracy-core/tracy-modules/tracy-viewer/tracyViewerController.js"></script>
+  <script src="tracy-core/tracy-modules/force/forceDirective.js"></script>
+  <script src="tracy-core/tracy-modules/force/forceController.js"></script>
+  <script src="tracy-core/tracy-modules/demo-control-panel/demoControlPanelDirective.js"></script>
+  <script src="tracy-core/tracy-modules/demo-control-panel/demoControlPanelController.js"></script>
+  <script src="tracy-core/tracy-modules/demo-control-panel/demoControlPanelService.js"></script>
+  <script src="tracy-core/tracy/tracy.js"></script>
+
+  <!--tracy-modules extensions-->
+  <!--TRACY_EXTENSIONS_DEPENDENCIES_START-->
+  <!-- The contents within TRACY_EXTENSIONS_DEPENDENCIES section are automatically replaced at extension build time -->
+  <script src="extensions/tracy-modules/hello-world/helloWorldDirective.js"></script>
+  <script src="extensions/tracy-modules/hello-world/helloWorldController.js"></script>
+  <!--TRACY_EXTENSIONS_DEPENDENCIES_END-->
+
+  <style>
+    div.navbar-collapse.collapse {
+        display: block;
+        overflow: hidden;
+        max-height: 0px;
+        -webkit-transition: max-height .3s ease;
+        -moz-transition: max-height .3s ease;
+        -o-transition: max-height .3s ease;
+        transition: max-height .3s ease;
+    }
+    div.navbar-collapse.collapse.in {
+        max-height: 2000px;
+    }
+  </style>
+  <title ng-controller="BrandingController">{{name}}</title>
+  <link ng-controller="BrandingController" rel="shortcut icon" href="{{icon}}">
+</head>
+
+<body >
+
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+
+    <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <!--Branding controller to use extensions/branding/... assets-->
+    <div ng-controller="BrandingController">
+      <a class="navbar-brand" href="#"><img ng-src="{{logo}}"></a>
+      <a class="navbar-brand" ui-sref="landing">{{name}}<sub> {{version}}</sub></a>
+    </div>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse " ng-class="!navCollapsed && 'in'">
+    <ul class="nav navbar-nav" ng-controller="ApplicationMenuController">
+    <!--=== Applications menu ===-->
+      <li class="dropdown" uib-dropdown>
+        <a href="#" class="dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Applications <b class="caret"></b></a>
+        <ul class="dropdown-menu" menu="menuHtml">
+        </ul>
+      </li>
+      <!--=== Config menu ===-->
+      <li><a ui-sref="config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Config</a></li>
+    </ul>
+    <!--=== Environment menu ===-->
+    <ul class="nav navbar-nav navbar-right" ng-controller="EnvironmentController">
+      <li class="dropdown" uib-dropdown>
+        <a role="button" class="dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-th" aria-hidden="true"></span> {{selectedEnvironment.name}} <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li ng-repeat="environment in environments"><a href="#landing" ng-click="selectEnvironment(environment)">{{environment.name}}</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+<div class="container-fluid">
+  <!--Section below expanded as per app.js route definitions-->
+  <div ui-view></div>
+</div>
+</body>
+</html>

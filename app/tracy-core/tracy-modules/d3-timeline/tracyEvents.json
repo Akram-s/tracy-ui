@@ -1,0 +1,74 @@
+{
+  "tracyEvents": [
+    {
+      "taskId": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "optId": "root",
+      "parentOptId": "null",
+      "component": "root",
+      "label": "root",
+      "msecBefore": 1469405292277,
+      "msecAfter":  1469420159235,
+      "msecElapsed": 14866958
+    },
+    {
+      "taskId": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "parentOptId": "root",
+      "component": "comp-a",
+      "optId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "label": "comp-a-parent",
+      "msecBefore": 1469405292277,
+      "msecAfter": 1469410159235,
+      "msecElapsed": 4866958
+    },
+    {
+      "taskId": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "parentOptId": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "optId": "AAAAAAAAAAAAAAA11111111111111111",
+      "label": "comp-a-child",
+      "component": "comp-a",
+      "msecBefore": 1469405294908,
+      "msecAfter": 1469409712782,
+      "msecElapsed": 4417874
+    },
+    {
+      "taskId": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "parentOptId": "root",
+      "component": "comp-b",
+      "optId": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "label": "comp-b-parent",
+      "msecBefore": 1469415292277,
+      "msecAfter":  1469420159235,
+      "msecElapsed": 4866958
+    },
+    {
+      "taskId": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "parentOptId": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+      "optId": "BBBBBBBBBBBBBBBBB111111111111111",
+      "label": "comp-a-child",
+      "component": "comp-b",
+      "msecBefore": 1469415294908,
+      "msecAfter":  1469419712782,
+      "msecElapsed": 4417874
+    },
+    {
+      "taskId": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "parentOptId": "BBBBBBBBBBBBBBBBB111111111111111",
+      "optId": "BBBBBBBBBBBBBBBBB222222222222222",
+      "label": "comp-a-grandchild-1",
+      "component": "comp-b",
+      "msecBefore": 1469415294908,
+      "msecAfter":  1469417712782,
+      "msecElapsed": 2417874
+    },
+    {
+      "taskId": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+      "parentOptId": "BBBBBBBBBBBBBBBBB111111111111111",
+      "optId": "BBBBBBBBBBBBBBBBB333333333333333",
+      "label": "comp-a-grandchild-2",
+      "component": "comp-b",
+      "msecBefore": 1469417712782,
+      "msecAfter":  1469419712782,
+      "msecElapsed": 2000000
+    }
+  ]
+}

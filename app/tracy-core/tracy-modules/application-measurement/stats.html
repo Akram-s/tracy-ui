@@ -1,0 +1,37 @@
+<div>
+    <div class="col-lg-4">
+        <!-- blue, green, orange, red, gray -->
+        <div class="panel panel-apdex-{{color}}">
+            <div class="panel-heading">
+                <span class="pull-left large" uib-tooltip="Task name" tooltip-placement="bottom" >{{info.task}}</span></span>
+                <span class="pull-right" uib-tooltip="APDEX score followed by Tolerating Response Time Threshold" tooltip-placement="bottom">{{info.apdexScore}} [{{info.rttT}}{{info.rttUnit}}]</span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- primary, success, warning, danger, Default -->
+                        <div><span class="label label-{{apdexRatingShade}} label-as-badge medium" uib-tooltip="APDEX rating" tooltip-placement="top">{{apdexRating}}</span></div>
+                        <div><span class="xlarge" uib-tooltip="Throughput TPx: Tasks Per Second/Minute/Hour" tooltip-placement="top">{{info.meanThroughputMetric}}</span><span> {{info.meanThroughputUnit}}</span></div>
+                        <div><span class="large"  uib-tooltip="% Server Errors (HTTP status 5xx)" tooltip-placement="top">{{info.errorPercentage}} </span><span> % Errors</span></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div uib-tooltip="Respone time statistics, including mean and key percentiles" tooltip-placement="left"> Response time stats:</div>
+                        <div uib-tooltip="Mean response time" tooltip-placement="left"><span class="label label-{{meanLatencyShade}} label-as-badge">{{info.meanLatency}}</span> mean</div>
+                        <div uib-tooltip="50th percentile response time" tooltip-placement="left"><span class="label label-{{p50LatencyShade}} label-as-badge">{{info.p50Latency}}</span> p50</div>
+                        <div uib-tooltip="90th percentile response time" tooltip-placement="left"><span class="label label-{{p90LatencyShade}} label-as-badge">{{info.p90Latency}}</span> p90</div>
+                        <div uib-tooltip="95th percentile response time" tooltip-placement="left"><span class="label label-{{p95LatencyShade}} label-as-badge">{{info.p95Latency}}</span> p95</div>
+                        <div uib-tooltip="99th percentile response time" tooltip-placement="left"><span class="label label-{{p99LatencyShade}} label-as-badge">{{info.p99Latency}}</span> p99</div>
+                    </div>
+                </div>
+                <!--<div><span><em><br>last updated n minutes ago, aggregating x minutes prior</em></span></div>-->
+            </div>
+            <div class="panel-footer">
+                <span uib-tooltip="HTTP status counts" tooltip-placement="top">HTTP status: </span>
+                <span uib-tooltip="HTTP Status 2xx response count" tooltip-placement="top">2xx <span class="label label-success label-as-badge">{{info.status2xx}}</span></span>
+                <span uib-tooltip="HTTP Status 4xx response count" tooltip-placement="top">4xx <span class="label label-warning label-as-badge">{{info.status4xx}}</span></span>
+                <span uib-tooltip="HTTP Status 5xx response count" tooltip-placement="top">5xx <span class="label label-danger label-as-badge">{{info.status5xx}}</span></span>
+            </div>
+        </div>
+    </div>
+</div>

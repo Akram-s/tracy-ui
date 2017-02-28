@@ -1,0 +1,22 @@
+<div class="container-fluid" ng-controller="TaskTimelineController">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">{{application}} {{task}} timeline analysis</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <nav>
+                <ul class="pager">
+                    <li class="previous {{disablePrevious}}"><a href="#{{prevUrl}}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+                    <li>{{sequenceId}} of {{lastId}}</li>
+                    <li class="next {{disableLast}}"><a href="#{{nextUrl}}">Next <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
+            <div >
+                <!--<div google-chart chart="chart" style="width: 1100px; height: 1000px;"></div>-->
+                <d3-timeline ng-controller="D3TimelineController" ng-init="dataPromise=dataPromise"></d3-timeline>
+            </div>
+        </div>
+    </div>
+</div>
