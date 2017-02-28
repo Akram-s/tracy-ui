@@ -18,13 +18,13 @@ angular.module('tracy-ui', ['ui.bootstrap','ui.router', 'ngStorage', 'ngResource
 
 			.state('task', {
 				name: 'task',
-				url: '/task?env&application&task',
+				url: '/task?env&application&task&view',
 				templateUrl: 'tracy-core/task/task.html'
 			})
 
 			.state('application', {
 				name: 'application',
-				url: '/application?env&application',
+				url: '/application?env&application&view',
 				templateUrl: 'tracy-core/application/application.html'
 			})
 

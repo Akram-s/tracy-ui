@@ -1,10 +1,12 @@
 var app = angular.module('tracy-ui');
 
 app.controller('TaskController',
-    ['$scope', '$stateParams','$sce', '$compile', 'Storage', function($scope, $stateParams, $sce, $compile, Storage){
+    ['$scope', '$log', '$stateParams','$sce', '$compile', 'Storage', function($scope, $log, $stateParams, $sce, $compile, Storage){
+    $scope.$log = $log;
     $scope.taskContext = {};
     $scope.application = $stateParams.application;
     $scope.task = $stateParams.task;
+    $scope.view = $stateParams.view;
     $scope.activeIndex = 0;
     $scope.initialised = false;
 
@@ -26,7 +28,6 @@ app.controller('TaskController',
         // Build the inner
         var tabsHtml = "";
         var index = 0;
-//        console.log("selectedView: " + selectedView);
         for (view in $scope.taskContext.views)  {
 //            console.log(view);
             if (view == selectedView)  {
@@ -52,7 +53,9 @@ app.controller('TaskController',
         var detectedDefaultView;
         var firstView;
         var defaultView;
+
         for (view in $scope.taskContext.views)  {
+            $log.debug("iterating view: " + view);
             if ($scope.taskContext.views[view].isDefault == true)  {
                 detectedDefaultView = view;
             }
@@ -61,6 +64,7 @@ app.controller('TaskController',
             }
             viewCount++;
         }
+
         if (detectedDefaultView != undefined)    {
             defaultView = detectedDefaultView;
         }
@@ -74,6 +78,27 @@ app.controller('TaskController',
         return defaultView;
     }
 
+    $scope.isValidView = function(context, view)    {
+        return (view in $scope.taskContext.views)
+    }
+
+    $scope.selectView = function(context)    {
+        var selectedView;
+        // If tab selected and valid
+        if ($scope.view!=undefined && $scope.isValidView(context, $scope.view))   {
+            selectedView = $scope.view;
+            $log.info("Selected Task view: "+ $scope.view);
+        }
+        else    {
+            if ($scope.view!=undefined && !$scope.isValidView(context, $scope.view)) {
+                $log.error("Unknown Task view: " + $scope.view);
+            }
+            selectedView = $scope.getDefaultView(context)
+            $log.info("Defaulted to view: "+ selectedView);
+        }
+        return selectedView;
+    }
+
     $scope.updateTaskContext = function()   {
         var capabilities = Storage.getCapabilities();
         var selectedEnvironment = Storage.getSelectedEnvironment();
@@ -85,8 +110,8 @@ app.controller('TaskController',
                 .applications[$stateParams.application]
                 .tasks[$stateParams.task];
 
-            var defaultView = $scope.getDefaultView($scope.taskContext);
-            $scope.moduleHtml =  $scope.buildModuleHtml(defaultView);
+            var selectedView = $scope.selectView($scope.taskContext);
+            $scope.moduleHtml =  $scope.buildModuleHtml(selectedView);
         }
     }
 

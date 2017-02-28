@@ -65,6 +65,10 @@ body {
     }
 }
 
+.navbar {
+    margin-bottom: 0;
+}
+
 .navbar-top-links {
     margin-right: 0;
 }

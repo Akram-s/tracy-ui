@@ -132,6 +132,7 @@ function measurableChartService()  {
          {
              options: {
                 chart: {
+                alignTicks: false,
                 zoomType: 'xy'
                 },
                 tooltip: {
@@ -651,12 +652,18 @@ function measurableChartService()  {
                     singleTaskVitalsTemplate.series[3].visible = false;
                 }
 			}
+
+            var RT_AXIS = 0;
+            var CNT_AXIS = 1;
             // console.log(singleTaskVitalsTemplate);
             // Apply unit to labels and tooltips
-            singleTaskVitalsTemplate.yAxis[0].labels.format = '{value}' + rttUnit;
+            singleTaskVitalsTemplate.yAxis[RT_AXIS].min = 0;
+            singleTaskVitalsTemplate.yAxis[CNT_AXIS].min = 0;
+
+            singleTaskVitalsTemplate.yAxis[RT_AXIS].labels.format = '{value}' + rttUnit;
             singleTaskVitalsTemplate.series[2].tooltip.valueSuffix = rttUnit;
             singleTaskVitalsTemplate.series[3].tooltip.valueSuffix = rttUnit;
-            singleTaskVitalsTemplate.yAxis[0].title.text = 'Response time (' + rttUnit+ ')',
+            singleTaskVitalsTemplate.yAxis[RT_AXIS].title.text = 'Response time (' + rttUnit+ ')',
             // Update chart data
 			singleTaskVitalsTemplate.series[0].data = successCountDataArray;
 			singleTaskVitalsTemplate.series[1].data = errorCountDataArray;

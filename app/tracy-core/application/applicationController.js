@@ -1,9 +1,11 @@
 var app = angular.module('tracy-ui');
 
 app.controller('ApplicationController',
-    ['$scope', '$stateParams','$sce', '$compile', 'Storage', function($scope, $stateParams, $sce, $compile, Storage){
+    ['$scope', '$log', '$stateParams','$sce', '$compile', 'Storage', function($scope, $log, $stateParams, $sce, $compile, Storage){
+    $scope.$log = $log;
     $scope.applicationContext = {};
     $scope.application = $stateParams.application;
+    $scope.view = $stateParams.view;
     $scope.activeIndex = 0;
     $scope.initialised = false;
 
@@ -73,6 +75,27 @@ app.controller('ApplicationController',
         return defaultView;
     }
 
+    $scope.isValidView = function(context, view)    {
+        return (view in $scope.applicationContext.views)
+    }
+
+    $scope.selectView = function(context)    {
+        var selectedView;
+        // If tab selected and valid
+        if ($scope.view!=undefined && $scope.isValidView(context, $scope.view))   {
+            selectedView = $scope.view;
+            $log.info("Selected Application view: "+ $scope.view);
+        }
+        else    {
+            if ($scope.view!=undefined && !$scope.isValidView(context, $scope.view)) {
+                $log.error("Unknown Application view: " + $scope.view);
+            }
+            selectedView = $scope.getDefaultView(context)
+            $log.info("Defaulted to view: "+ selectedView);
+        }
+        return selectedView;
+    }
+
     $scope.updateTaskContext = function()   {
         var capabilities = Storage.getCapabilities();
         var selectedEnvironment = Storage.getSelectedEnvironment();
@@ -83,7 +106,7 @@ app.controller('ApplicationController',
                 .environments[Storage.getSelectedEnvironment()]
                 .applications[$stateParams.application];
 
-            var defaultView = $scope.getDefaultView($scope.applicationContext);
+            var defaultView = $scope.selectView($scope.applicationContext);
             $scope.moduleHtml =  $scope.buildModuleHtml(defaultView);
         }
     }
