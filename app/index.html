@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="tracy-ui">
+<html ng-app="tracy-ui" ng-controller="BrandingController">
 
 <head>
   <meta charset="utf-8" />
@@ -74,56 +74,54 @@
         max-height: 2000px;
     }
   </style>
-  <title ng-controller="BrandingController">{{name}}</title>
-  <link ng-controller="BrandingController" rel="shortcut icon" href="{{icon}}">
+  <title >{{name}}</title>
+  <link rel="shortcut icon" href="{{icon}}">
 </head>
 
-<body >
-
-<nav class="navbar navbar-default navbar-inverse" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-
-    <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <!--Branding controller to use extensions/branding/... assets-->
-    <div ng-controller="BrandingController">
-      <a class="navbar-brand" href="#"><img ng-src="{{logo}}"></a>
-      <a class="navbar-brand" ui-sref="landing">{{name}}<sub> {{version}}</sub></a>
+<body>
+  <nav class="navbar navbar-default navbar-inverse" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!--Branding controller to use extensions/branding/... assets-->
+      <div>
+        <a class="navbar-brand" href="#"><img ng-src="{{logo}}"></a>
+        <a class="navbar-brand" ui-sref="landing">{{name}}<sub> {{version}}</sub></a>
+      </div>
     </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse " ng-class="!navCollapsed && 'in'">
+      <ul class="nav navbar-nav" ng-controller="ApplicationMenuController">
+      <!--=== Applications menu ===-->
+        <li class="dropdown" uib-dropdown>
+          <a href="#" class="dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Applications <b class="caret"></b></a>
+          <ul class="dropdown-menu" menu="menuHtml">
+          </ul>
+        </li>
+        <!--=== Config menu ===-->
+        <li><a ui-sref="config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Config</a></li>
+      </ul>
+      <!--=== Environment menu ===-->
+      <ul class="nav navbar-nav navbar-right" ng-controller="EnvironmentController">
+        <li class="dropdown" uib-dropdown>
+          <a role="button" class="dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-th" aria-hidden="true"></span> {{selectedEnvironment.name}} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+              <li ng-repeat="environment in environments"><a href="#landing" ng-click="selectEnvironment(environment)">{{environment.name}}</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </nav>
+
+  <div class="container-fluid">
+    <!--Section below expanded as per app.js route definitions-->
+    <div ui-view></div>
   </div>
-
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse " ng-class="!navCollapsed && 'in'">
-    <ul class="nav navbar-nav" ng-controller="ApplicationMenuController">
-    <!--=== Applications menu ===-->
-      <li class="dropdown" uib-dropdown>
-        <a href="#" class="dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Applications <b class="caret"></b></a>
-        <ul class="dropdown-menu" menu="menuHtml">
-        </ul>
-      </li>
-      <!--=== Config menu ===-->
-      <li><a ui-sref="config"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Config</a></li>
-    </ul>
-    <!--=== Environment menu ===-->
-    <ul class="nav navbar-nav navbar-right" ng-controller="EnvironmentController">
-      <li class="dropdown" uib-dropdown>
-        <a role="button" class="dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="false"> <span class="glyphicon glyphicon-th" aria-hidden="true"></span> {{selectedEnvironment.name}} <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            <li ng-repeat="environment in environments"><a href="#landing" ng-click="selectEnvironment(environment)">{{environment.name}}</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div><!-- /.navbar-collapse -->
-</nav>
-
-<div class="container-fluid">
-  <!--Section below expanded as per app.js route definitions-->
-  <div ui-view></div>
-</div>
 </body>
 </html>
