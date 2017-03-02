@@ -4,6 +4,7 @@ app.controller('TaskController',
     ['$scope', '$log', '$stateParams','$sce', '$compile', 'Storage', function($scope, $log, $stateParams, $sce, $compile, Storage){
     $scope.$log = $log;
     $scope.taskContext = {};
+    $scope.environment = $stateParams.env;
     $scope.application = $stateParams.application;
     $scope.task = $stateParams.task;
     $scope.view = $stateParams.view;

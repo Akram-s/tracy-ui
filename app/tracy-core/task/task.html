@@ -1,4 +1,9 @@
 <div ng-controller="TaskController">
-    <h3>{{application}} <small>{{task}}</small></h3>
+    <h3>
+        <ul class="breadcrumb">
+            <li><a href="#/application?env={{environment}}&application={{application}}">{{application}}</a></li>
+            <li><a href="#/task?env={{environment}}&application={{application}}&task={{task}}">{{task}}</a></li>
+        </ul>
+    </h3>
     <div taskmodule="moduleHtml"/>
 </div>

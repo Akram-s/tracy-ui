@@ -5,6 +5,7 @@ app.controller('ApplicationController',
     $scope.$log = $log;
     $scope.applicationContext = {};
     $scope.application = $stateParams.application;
+    $scope.environment = $stateParams.env;
     $scope.view = $stateParams.view;
     $scope.activeIndex = 0;
     $scope.initialised = false;
