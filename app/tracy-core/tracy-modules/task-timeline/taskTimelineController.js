@@ -33,6 +33,7 @@ function TaskTimelineController
 
   function nextUrl()  {
     var increment = 1;
+//    console.log("$scope.sequenceId:" + $scope.sequenceId + ", $scope.lastId:" + $scope.lastId);
     if ($scope.sequenceId == $scope.lastId) {
       increment = 0;
     }
@@ -99,35 +100,36 @@ function TaskTimelineController
       var deferred = $q.defer();
       taskTimelineWebService.get(query)
         .success(function (response) {
-          // Uncomment to use TWS mock response
-          // response = mockTaskAnalysisResource(query);
-          // console.log(JSON.stringify(mockTaskAnalysisResource(query).tracyTasksPage.tracyTasks[0].tracyTask.tracyEvents));
+//           Uncomment to use TWS mock response
+//           response = mockTaskAnalysisResource(query);
+//           console.log(JSON.stringify(mockTaskAnalysisResource(query).tracyTasksPage.tracyTasks[0].tracyTask.tracyEvents));
 //           console.log(JSON.stringify(response.tracyTasksPage.tracyTasks[0].tracyTask.tracyEvents));
           $scope.lastId = response.tracyTasksPage.records;
-//          taskTimelineGraphService.addTracyTask(response.tracyTasksPage.tracyTasks[$scope.sequenceId-1].tracyTask.tracyEvents);
-//          $scope.chart = taskTimelineGraphService.asGoogleTimeline(0);
-//           console.log(JSON.stringify($scope.chart));
-          $scope.disablePrevious = disableIfFirst();
-          $scope.disableLast = disableIfLast();
-          $scope.prevUrl = previousUrl();
-          $scope.nextUrl = nextUrl();
 
-          var selectedSequenceId;
           if ($scope.sequenceId == "_last") {
             // FIXME: _last is a hack to display the last frame in the time window
-            $scope.sequenceId = 1;
-            $scope.lastId = 1;
+            $scope.sequenceId = $scope.lastId;
             deferred.resolve(response.tracyTasksPage.tracyTasks[response.tracyTasksPage.records-1].tracyTask.tracyEvents);
           }
           else  {
             deferred.resolve(response.tracyTasksPage.tracyTasks[$scope.sequenceId-1].tracyTask.tracyEvents);
           }
+
+          // Get msecBefore from the root frame
+          var rootFrameMsecBefore = response.tracyTasksPage.tracyTasks[$scope.sequenceId-1].tracyTask.tracyEvents[0].msecBefore;
+//          console.log(rootFrameMsecBefore);
+
+          $scope.timelineStartTime = new Date(rootFrameMsecBefore).toUTCString();
+          $scope.disablePrevious = disableIfFirst();
+          $scope.disableLast = disableIfLast();
+          $scope.prevUrl = previousUrl();
+          $scope.nextUrl = nextUrl();
         });
         return deferred.promise;
   }
 
   function isRelativeTimeModifier(modifier) {
-    var qualifierSplit = modifier.split(/(\d)/);
+    var qualifierSplit = modifier.split(/(\d+)/);
     var test = qualifierSplit[0]=="-"
         && !isNaN(qualifierSplit[1])
         && (qualifierSplit[2] == "d"
@@ -144,8 +146,10 @@ function TaskTimelineController
   }
 
   function getTimeOffset(timeQualifier)  {
-    var qualifierSplit = timeQualifier.split(/(\d)/);
+    var qualifierSplit = timeQualifier.split(/(\d+)/);
     var timeOffset = 0;
+
+//    console.log(qualifierSplit);
 
      if (qualifierSplit[2] == "d")  {
        timeOffset = Date.now() - qualifierSplit[1]*(1000*60*60*24)
@@ -227,6 +231,7 @@ function TaskTimelineController
   $scope.sequenceId = getSequenceIdFromKeyword($stateParams['sequenceId'])
   $scope.application = (typeof $stateParams['application'] === 'undefined') ? 'unknown-application' : $stateParams['application'];
   $scope.task = (typeof $stateParams['task'] === 'undefined') ? 'unknown-task' : $stateParams['task'];
+  $scope.timelineStartTime = new Date(Number($scope.earliest)).toUTCString();
 
 //  console.log("earliest=" + $stateParams['earliest'] + ", latest=" + $stateParams['latest']);
 //  console.log("earliest=" + $scope.earliest + ", latest=" + $scope.latest);
