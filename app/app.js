@@ -30,7 +30,7 @@ angular.module('tracy-ui', ['ui.bootstrap','ui.router', 'ngStorage', 'ngResource
 
             .state('timeline',{
                 name: 'timeline',
-                url:'/timeline/:sequenceId?env&application&task&earliest&latest&rtBelow&rtAbove',
+                url:'/timeline/:sequenceId?env&application&task&earliest&latest&rtBelow&rtAbove&category',
                 templateUrl:'tracy-core/tracy-modules/task-timeline/task-timeline.html'
             })
 	});
