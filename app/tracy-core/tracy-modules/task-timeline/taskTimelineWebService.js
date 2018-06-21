@@ -16,6 +16,9 @@ function taskTimelineWebService($http, Storage)  {
             + '&sort=' + params.sort
             + '&offset=' + params.offset
             + '&limit='  + params.limit
+            if(params.category){
+			url = url + '&category=' + params.category;	
+			}
             var test = $http.get(url, { cache: true})
             .success(function(res){
                 return res;
