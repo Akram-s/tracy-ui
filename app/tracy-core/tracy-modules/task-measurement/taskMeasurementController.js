@@ -33,22 +33,27 @@ function TaskMeasurementController
         }
 
 	    $scope.getChartData = function () {
-		    	taskMeasurementService.get($scope.application, $scope.task)
-				    .success(function (response) {
-//				     console.log("GET /measurement [" + $scope.application + "][" + $scope.task + "]");
-				    $scope.measurement = response;
-				    // console.log($scope.measurement);
-				    // console.log("Success:" + JSON.stringify(response));
-                    $scope.rttT = $scope.measurement.singleApdexTimechart.rttT;
-                    $scope.rttF = $scope.measurement.singleApdexTimechart.rttF;
-                    $scope.rttUnit = $scope.measurement.singleApdexTimechart.rttUnit;
-                    $scope.spanCount = d3.sum($scope.measurement.vitalsTimechart.count)
-                    var timeSequenceLength = $scope.measurement.singleApdexTimechart.timeSequence.length;
-                    $scope.earliest = $scope.measurement.vitalsTimechart.timeSequence[0];
-                    $scope.latest = $scope.measurement.vitalsTimechart.timeSequence[timeSequenceLength-1];
+		    var splitTaskArray = $scope.task.split("-");
+		    if(splitTaskArray.length>1){
+			$scope.category = splitTaskArray[0];
+			$scope.task = splitTaskArray[1];
+		    }
+		    taskMeasurementService.get($scope.application, $scope.task)
+		    	.success(function (response) {
+//			console.log("GET /measurement [" + $scope.application + "][" + $scope.task + "]");
+			$scope.measurement = response;
+			// console.log($scope.measurement);
+			// console.log("Success:" + JSON.stringify(response));
+                    	$scope.rttT = $scope.measurement.singleApdexTimechart.rttT;
+                    	$scope.rttF = $scope.measurement.singleApdexTimechart.rttF;
+                    	$scope.rttUnit = $scope.measurement.singleApdexTimechart.rttUnit;
+                    	$scope.spanCount = d3.sum($scope.measurement.vitalsTimechart.count)
+                    	var timeSequenceLength = $scope.measurement.singleApdexTimechart.timeSequence.length;
+                    	$scope.earliest = $scope.measurement.vitalsTimechart.timeSequence[0];
+                    	$scope.latest = $scope.measurement.vitalsTimechart.timeSequence[timeSequenceLength-1];
 
-                    // Make refresh period 1/3 of snap
-                    var snapInMsec = ($scope.measurement.vitalsTimechart.timeSequence[1]
+                    	// Make refresh period 1/3 of snap
+                    	var snapInMsec = ($scope.measurement.vitalsTimechart.timeSequence[1]
                                 - $scope.measurement.vitalsTimechart.timeSequence[0]);
 //                    console.log(snapInMsec);
                     $scope.refreshMsecPeriod = Math.min(snapInMsec/3, 5*60*1000); // But no more than 5 minutes
