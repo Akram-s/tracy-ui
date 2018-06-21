@@ -530,7 +530,7 @@ function measurableChartService()  {
     var lineColorPallete = ['#000000', '#058DC7', '#50B432', '#ED561B',  '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4', '#DDDF00'];
     var markerShapes = ['circle', 'triangle', 'square', 'diamond', 'triangle-down'];
     return {
-        getSingleTaskApdexTimechart: function(environment, application, task, chartData){
+        getSingleTaskApdexTimechart: function(environment, application, task, chartData,category){
             var i = 0, newDataArray = [];
 			for (i = 0; i < chartData.timeSequence.length; i++) {
 				if (null != chartData.apdexScores[i])	{
@@ -544,6 +544,9 @@ function measurableChartService()  {
                         + "&latest=" + latest
                         + "&rtBelow=" + chartData.rttF * 10
                         + "&rtAbove=" + 0;
+		    if(category){
+			url = url + "&category=" + category;
+		    }
 				    var newData = {};
 				    newData.x = chartData.timeSequence[i];
 				    newData.y = chartData.apdexScores[i];
@@ -600,7 +603,7 @@ function measurableChartService()  {
             return multiTaskApdexTimechart;
         },
 
-        getSingleTaskVitalsTimechart: function(environment, application, task, chartData){
+        getSingleTaskVitalsTimechart: function(environment, application, task, chartData, category){
         	// console.log(chartData);
             var i = 0, successCountDataArray = [], errorCountDataArray = [], p95DataArray = [], maxDataArray = [];
             var totalErrorCount=0, maxSnapCount=0;
@@ -619,7 +622,9 @@ function measurableChartService()  {
                     + "&latest=" + latest
                     + "&rtBelow=" + rttF * 10
                     + "&rtAbove=" + 0;
-
+		if(category){
+		   url = url + "&category=" + category;
+		}
                 var successCountData = {}, errorCountData = {}, p95Data = {}, maxData = {};
 				if (null != chartData.count[i])	{
 				    successCountData.x = chartData.timeSequence[i];
@@ -681,7 +686,7 @@ function measurableChartService()  {
             return singleTaskVitalsTemplate;
         },
 
-        getLatencyHistogram: function(environment, application, task, chartData){
+        getLatencyHistogram: function(environment, application, task, chartData,category){
             var i = 0, binsData = [], countAndColourData = [];
 			for (i = chartData.bins.length-1; i>=0; i--) {
 				var countAndColor = {};
@@ -726,6 +731,9 @@ function measurableChartService()  {
                         + "&latest=" + latestPlus1
                         + "&rtBelow=" + binBoundary[1]
                         + "&rtAbove=" + binBoundary[0]
+		    if(category){
+			url = url + "&category=" + category;
+		    }
                     countAndColor.url = url;
 	            	countAndColourData.push(countAndColor);
 	        	}
