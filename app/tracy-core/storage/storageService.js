@@ -27,6 +27,12 @@ app.factory('Storage', function storageFactory($localStorage, $sessionStorage, $
         return StorageApi.transientStorage.capabilities.environments
             [this.transientStorage.selectedEnvironment].applications[application].tasks[task].serverUrl;
     }
+    
+    StorageApi.getTaskServerComposerUrl = function(application, task)  {
+//        console.log(this.transientStorage.selectedEnvironment+":"+application+":"+task);
+        return StorageApi.transientStorage.capabilities.environments
+            [this.transientStorage.selectedEnvironment].applications[application].tasks[task].composerServerUrl;
+    }
 
     StorageApi.getApplicationServerUrl = function(application)  {
         return StorageApi.transientStorage.capabilities.environments
