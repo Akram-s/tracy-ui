@@ -11,7 +11,7 @@ function taskMeasurementService($http, Storage)  {
             + '/tasks/' + encodeURIComponent(webServiceTask)
             + '/measurement'
             if(category){
-				url = url + '?categroy=' + category;
+				url = url + '?category=' + category;
 			}
             var test = $http.get(url)
             .success(function(res){
