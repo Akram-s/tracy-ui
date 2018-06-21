@@ -36,9 +36,11 @@ function TaskMeasurementController
 		    var splitTaskArray = $scope.task.split("-");
 		    if(splitTaskArray.length>1){
 			$scope.category = splitTaskArray[0];
-			$scope.task = splitTaskArray[1];
-		    }
-		    taskMeasurementService.get($scope.application, $scope.task)
+			$scope.webServiceTask = splitTaskArray[1];
+		    }else{
+			 $scope.webServiceTask = $scope.task;
+			}
+		    taskMeasurementService.get($scope.application, $scope.task, $scope.webServiceTask,$scope.category)
 		    	.success(function (response) {
 //			console.log("GET /measurement [" + $scope.application + "][" + $scope.task + "]");
 			$scope.measurement = response;
@@ -62,11 +64,11 @@ function TaskMeasurementController
                     $scope.timeout = $timeout($scope.getChartData, $scope.refreshMsecPeriod);
 
 				    $scope.singleTaskApdexTimechart
-		    			= measurableChartService.getSingleTaskApdexTimechart($scope.environment, $scope.application, $scope.task, $scope.measurement.singleApdexTimechart);
+		    			= measurableChartService.getSingleTaskApdexTimechart($scope.environment, $scope.application, $scope.task, $scope.measurement.singleApdexTimechart, $scope.category);
 		    		$scope.singleTaskVitalsTimechart =
-		    			measurableChartService.getSingleTaskVitalsTimechart($scope.environment, $scope.application, $scope.task, $scope.measurement.vitalsTimechart);
+		    			measurableChartService.getSingleTaskVitalsTimechart($scope.environment, $scope.application, $scope.task, $scope.measurement.vitalsTimechart, $scope.category);
 		    		$scope.latencyHistogram =
-		    			measurableChartService.getLatencyHistogram($scope.environment, $scope.application, $scope.task, $scope.measurement.latencyHistogram);
+		    			measurableChartService.getLatencyHistogram($scope.environment, $scope.application, $scope.task, $scope.measurement.latencyHistogram, $scope.category);
 				})
 				.error(function (errorResponse) {
 				    $scope.refreshMsecPeriod = 10000;
