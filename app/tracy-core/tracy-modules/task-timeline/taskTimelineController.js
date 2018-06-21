@@ -28,6 +28,9 @@ function TaskTimelineController
       + "&latest=" + $scope.latest
       + "&rtBelow=" + $stateParams['rtBelow']
       + "&rtAbove=" + $stateParams['rtAbove'];
+      if($scope.category){
+		prevUrl = prevUrl + "&category=" + $scope.category;
+	}
     return prevUrl;
   }
 
@@ -46,6 +49,9 @@ function TaskTimelineController
     + "&latest=" + $scope.latest
     + "&rtBelow=" + $stateParams['rtBelow']
     + "&rtAbove=" + $stateParams['rtAbove'];
+      if($scope.category){
+		nextUrl = nextUrl + "&category=" + $scope.category;
+	}
     return nextUrl;
   }
 
@@ -203,7 +209,7 @@ function TaskTimelineController
     return id;
   }
 
-  function prepareAnalysisQuery(application, task, earliest, latest, rtAbove, rtBelow) {
+  function prepareAnalysisQuery(application, task, earliest, latest, rtAbove, rtBelow,category) {
     var query = {};
     query.earliest = earliest;
     query.latest = latest;
@@ -213,6 +219,7 @@ function TaskTimelineController
     query.sort = "-msecElapsed";
     query.offset = "0";
     query.limit = "20";
+    query.category = category;
     return query;
   }
 
@@ -232,13 +239,15 @@ function TaskTimelineController
   $scope.application = (typeof $stateParams['application'] === 'undefined') ? 'unknown-application' : $stateParams['application'];
   $scope.task = (typeof $stateParams['task'] === 'undefined') ? 'unknown-task' : $stateParams['task'];
   $scope.timelineStartTime = new Date(Number($scope.earliest)).toUTCString();
-
+  if($stateParams['category']){
+	$scope.category = $stateParams['category'];
+  }
 //  console.log("earliest=" + $stateParams['earliest'] + ", latest=" + $stateParams['latest']);
 //  console.log("earliest=" + $scope.earliest + ", latest=" + $scope.latest);
 //  console.log($stateParams);
 
   Storage.setSelectedEnvironment($scope.environment);
-  $scope.query = prepareAnalysisQuery($scope.application, $scope.task, $scope.earliest, $scope.latest, $scope.rtAbove, $scope.rtBelow);
+  $scope.query = prepareAnalysisQuery($scope.application, $scope.task, $scope.earliest, $scope.latest, $scope.rtAbove, $scope.rtBelow, $scope.category);
   $scope.dataPromise = $scope.getTaskAnalysis($scope.query);
 //  console.log(JSON.stringify($scope.dataPromise));
 //  $scope.dataPromise.then(function(greeting) {
