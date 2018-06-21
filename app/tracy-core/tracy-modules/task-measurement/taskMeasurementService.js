@@ -5,10 +5,10 @@ angular
 taskMeasurementService.$inject = ['$http', 'Storage'];
 function taskMeasurementService($http, Storage)  {
     var service = {
-        get: function(application, task) {
-            var url = Storage.getTaskServerUrl(application, task,category)
+        get: function(application, task, webServiceTask,category) {
+            var url = Storage.getTaskServerUrl(application, task)
             + '/applications/' + encodeURIComponent(application)
-            + '/tasks/' + encodeURIComponent(task)
+            + '/tasks/' + encodeURIComponent(webServiceTask)
             + '/measurement'
             if(category){
 				url = url + '?categroy=' + category;
