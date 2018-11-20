@@ -17,7 +17,7 @@ function taskTimelineWebService($http, Storage)  {
             + '/analysis'
             + '?earliest=' + params.earliest
             + '&latest=' + params.latest
-            + '&filter=' + params.filter
+            + '&filter=' + encodeURIComponent(params.filter)
             + '&sort=' + params.sort
             + '&offset=' + params.offset
             + '&limit='  + params.limit
