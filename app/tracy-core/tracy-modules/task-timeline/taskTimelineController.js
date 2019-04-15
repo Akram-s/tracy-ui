@@ -22,7 +22,7 @@ function TaskTimelineController
     var prevUrl = "/timeline/"
       + (Number($scope.sequenceId)-decrement)
       + "?env=" + $scope.environment
-      + "&application=" + $scope.application
+      + "&application=" + encodeURIComponent($scope.application)
       + "&task=" + $scope.task
       + "&earliest=" + $scope.earliest
       + "&latest=" + $scope.latest
@@ -43,7 +43,7 @@ function TaskTimelineController
     var nextUrl = "/timeline/"
     + (Number($scope.sequenceId)+increment)
     + "?env=" + $scope.environment
-    + "&application=" + $scope.application
+    + "&application=" + encodeURIComponent($scope.application)
     + "&task=" + $scope.task
     + "&earliest=" + $scope.earliest
     + "&latest=" + $scope.latest
