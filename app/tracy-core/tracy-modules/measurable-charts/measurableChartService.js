@@ -538,7 +538,7 @@ function measurableChartService()  {
                         + chartData.timeSequence[chartData.timeSequence.length-1]
                         - chartData.timeSequence[chartData.timeSequence.length-2];
                     var url = "#/timeline/1?env=" + environment
-                        + "&application=" + application
+                        + "&application=" + encodeURIComponent(application)
                         + "&task=" + task
                         + "&earliest=" + chartData.timeSequence[i]
                         + "&latest=" + latest
@@ -616,7 +616,7 @@ function measurableChartService()  {
                     - chartData.timeSequence[chartData.timeSequence.length-2];
 
                 var url = "#/timeline/1?env=" + environment
-                    + "&application=" + application
+                    + "&application=" + encodeURIComponent(application)
                     + "&task=" + task
                     + "&earliest=" + chartData.timeSequence[i]
                     + "&latest=" + latest
@@ -725,7 +725,7 @@ function measurableChartService()  {
                     var latestPlus1 = latest + latest - latestMinus1;
                     // http://api.highcharts.com/highcharts#plotOptions.area.point.events.click
                     var url = "#/timeline/1?env=" + environment
-                        + "&application=" + application
+                        + "&application=" + encodeURIComponent(application)
                         + "&task=" + task
                         + "&earliest=" + earliest
                         + "&latest=" + latestPlus1
